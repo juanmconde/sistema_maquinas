@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Reparaciones</title>
+</head>
+<body>
+    <h1>Lista de Reparaciones</h1>
+    <table>
+        <tr>
+            <th>Máquina</th>
+            <th>Descripción</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Fin</th>
+            <th>Costo</th>
+        </tr>
+        {% for reparacion in reparaciones %}
+            <tr>
+                <td>{{ reparacion.maquina.nombre }}</td>
+                <td>{{ reparacion.descripcion }}</td>
+                <td>{{ reparacion.fecha_inicio }}</td>
+                <td>{{ reparacion.fecha_fin }}</td>
+                <td>{{ reparacion.costo }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
