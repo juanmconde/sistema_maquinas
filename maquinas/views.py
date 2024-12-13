@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Cliente, Maquina
 from .forms import ClienteForm, MaquinaForm
 from django.contrib import messages  # Para mostrar mensajes al usuario
+from django.http import HttpResponse
+
+def inicio(request):
+    return HttpResponse("<h1>¡Bienvenido al Administrador de Taller!</h1>")
+
 
 def lista_maquinas(request):
     maquinas = Maquina.objects.select_related("cliente").all()
