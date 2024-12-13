@@ -6,7 +6,7 @@ class ReparacionInline(admin.TabularInline):
     extra = 1
 
 class MaquinaAdmin(admin.ModelAdmin):
-    inlines = [ReparacionInline]
+    list_display = ("id_unico", "tipo", "cliente")
 
 admin.site.register(Maquina, MaquinaAdmin)
 admin.site.register(Reparacion)

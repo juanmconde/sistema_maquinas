@@ -1,7 +1,12 @@
 from django import forms
-from .models import Maquina
+from .models import Cliente, Maquina
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ["nombre", "apellido", "telefono"]
 
 class MaquinaForm(forms.ModelForm):
     class Meta:
         model = Maquina
-        fields = ['nombre', 'descripcion', 'fecha_entrada', 'estado']
+        fields = ["tipo", "problema", "fecha_entrada"]

@@ -1,23 +1,39 @@
-from django.shortcuts import render
-from .models import Maquina, Reparacion  # Asegúrate de importar los modelos necesarios
+from django.shortcuts import render, redirect
+from .models import Cliente, Maquina
+from .forms import ClienteForm, MaquinaForm
+from django.contrib import messages  # Para mostrar mensajes al usuario
 
 def lista_maquinas(request):
-    maquinas = Maquina.objects.all()  # Obtener todas las máquinas
-    return render(request, 'maquinas/lista_maquinas.html', {'maquinas': maquinas})
+    maquinas = Maquina.objects.select_related("cliente").all()
+    return render(request, "maquinas/lista_maquinas.html", {"maquinas": maquinas})
 
-def lista_reparaciones(request):
-    reparaciones = Reparacion.objects.all()  # Obtener todas las reparaciones
-    return render(request, 'maquinas/lista_reparaciones.html', {'reparaciones': reparaciones})
-
-from django.shortcuts import render, redirect
-from .forms import MaquinaForm
-
-def crear_maquina(request):
+def registrar_cliente(request):
     if request.method == "POST":
-        form = MaquinaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("lista_maquinas")  # Redirige a la página con la lista de máquinas
+        cliente_form = ClienteForm(request.POST)
+        maquina_form = MaquinaForm(request.POST)
+
+        if cliente_form.is_valid() and maquina_form.is_valid():
+            cliente, creado = Cliente.objects.get_or_create(
+                telefono=cliente_form.cleaned_data["telefono"],
+                defaults={
+                    "nombre": cliente_form.cleaned_data["nombre"],
+                    "apellido": cliente_form.cleaned_data["apellido"],
+                }
+            )
+            maquina = maquina_form.save(commit=False)
+            maquina.cliente = cliente
+            maquina.save()
+
+            messages.success(request, "Cliente y máquina registrados correctamente.")
+            return redirect("lista_maquinas")
+        else:
+            messages.error(request, "Por favor, revisá los datos ingresados.")
     else:
-        form = MaquinaForm()
-    return render(request, "maquinas/crear_maquina.html", {"form": form})
+        cliente_form = ClienteForm()
+        maquina_form = MaquinaForm()
+
+    return render(
+        request,
+        "maquinas/registro_cliente.html",
+        {"cliente_form": cliente_form, "maquina_form": maquina_form},
+    )
