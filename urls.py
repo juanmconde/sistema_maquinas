@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from maquinas import views  # Importa las vistas de tu app principal
+from maquinas import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.inicio, name='inicio'),  # Ruta para la página de inicio
-    path('maquinas/', include('maquinas.urls')),  # Incluye las URLs de la app 'maquinas'
+    path('', views.lista_maquinas, name='inicio'),  # Página principal
+    path('registrar/', views.registrar_cliente, name='registrar_cliente'),  # Registrar cliente y máquina
+    path('clientes/', views.lista_clientes, name='lista_clientes'),  # Nueva ruta para listar clientes
+    path('maquinas/', include('maquinas.urls')),  # Incluye todas las URLs de la app 'maquinas'
 ]
