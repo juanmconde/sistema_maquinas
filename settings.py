@@ -1,7 +1,6 @@
-import os
 from pathlib import Path
+import os
 
-# Define BASE_DIR correctamente utilizando Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'clave-insegura-para-desarrollo')
@@ -33,7 +32,7 @@ ROOT_URLCONF = "sistema_maquinas.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates/'],
+        'DIRS': [BASE_DIR / "maquinas" / "templates"/"maquinas"],  # Asegúrate de que este sea el camino correcto.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,7 +51,7 @@ WSGI_APPLICATION = "sistema_maquinas.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",  # Corrige el uso de Path
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -76,9 +75,7 @@ TIME_ZONE = "America/Argentina/Buenos_Aires"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
