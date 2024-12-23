@@ -32,7 +32,7 @@ ROOT_URLCONF = "sistema_maquinas.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "maquinas" / "templates"/"maquinas"],  # Asegúrate de que este sea el camino correcto.
+        'DIRS': [BASE_DIR / "maquinas" / "templates" / "maquinas"],  # Asegúrate de que este sea el camino correcto.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
